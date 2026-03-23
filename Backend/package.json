@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API Node.js para gestionar turnos y ganancias de Juli's Agenda usando Neon Postgres",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon --env-file=.env src/server.js",
+    "start": "node src/server.js",
+    "lint": "node --check src/server.js",
+    "test": "npm run lint",
+    "smoke": "node scripts/smoke-test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

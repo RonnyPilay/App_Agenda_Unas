@@ -1,0 +1,364 @@
+:root {
+  --pink-50: #fff5fa;
+  --pink-100: #ffe6f1;
+  --pink-200: #ffd0e5;
+  --pink-300: #ffb1d5;
+  --pink-400: #ff8fc4;
+  --pink-500: #ff6ab0;
+  --pink-600: #f2499a;
+  --pink-700: #d63583;
+  --text-900: #3b2030;
+  --text-700: #6a4254;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(214, 53, 131, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text-900);
+  background:
+    radial-gradient(circle at 10% 10%, #ffe8f4 0%, transparent 35%),
+    radial-gradient(circle at 90% 20%, #ffd9eb 0%, transparent 35%),
+    linear-gradient(180deg, var(--pink-50), #fff);
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, var(--pink-700), var(--pink-600));
+  color: var(--white);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.brand h1 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.brand p {
+  margin: 0.35rem 0 0;
+  opacity: 0.9;
+  font-size: 0.92rem;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.nav-btn {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  padding: 0.72rem 0.8rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.install-btn {
+  text-align: center;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+}
+
+.install-btn[hidden] {
+  display: none;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.contenido {
+  padding: 1.2rem;
+  overflow: auto;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.section-header p {
+  margin: 0.35rem 0 1rem;
+  color: var(--text-700);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(255, 122, 191, 0.28);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 1rem;
+}
+
+.form-control {
+  border: 1px solid #f2bfd9;
+  border-radius: 10px;
+}
+
+.form-control:focus {
+  border-color: var(--pink-500);
+  box-shadow: 0 0 0 0.2rem rgba(255, 106, 176, 0.2);
+}
+
+.btn-rosa {
+  border: none;
+  background: linear-gradient(135deg, var(--pink-600), var(--pink-500));
+  color: #fff;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-rosa:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(242, 73, 154, 0.25);
+}
+
+.btn-secundario {
+  border: 1px solid #f4bfd9;
+  background: #fff;
+  color: var(--pink-700);
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+}
+
+.ganancias-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.ganancia-card {
+  background: linear-gradient(180deg, #fff, #fff5fa);
+  border: 1px solid #f4c3dc;
+  border-radius: 14px;
+  padding: 0.8rem;
+  box-shadow: 0 8px 16px rgba(214, 53, 131, 0.08);
+}
+
+.ganancia-card small {
+  color: var(--text-700);
+}
+
+.ganancia-card h3 {
+  margin: 0.2rem 0 0;
+  color: var(--pink-700);
+}
+
+.oculto {
+  display: none !important;
+}
+
+#calendar {
+  background: transparent;
+}
+
+/* FullCalendar custom */
+.fc .fc-toolbar-title {
+  color: var(--pink-700);
+  font-size: 1.2rem;
+}
+
+.fc .fc-button-primary {
+  background: var(--pink-600);
+  border-color: var(--pink-600);
+}
+
+.fc .fc-button-primary:hover {
+  background: var(--pink-700);
+  border-color: var(--pink-700);
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background: #fff0f7;
+}
+
+/* Forzar calendario en negro (texto + líneas) */
+.fc,
+.fc a,
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number,
+.fc .fc-daygrid-more-link,
+.fc .fc-list-day-text,
+.fc .fc-list-day-side-text {
+  color: #000 !important;
+  text-decoration-color: #000 !important;
+}
+
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid table,
+.fc .fc-scrollgrid td,
+.fc .fc-scrollgrid th,
+.fc .fc-daygrid-day,
+.fc .fc-col-header-cell {
+  border-color: #000 !important;
+}
+
+.fc-event {
+  background: transparent !important;
+  border: none !important;
+}
+
+.fc-event-title {
+  display: none;
+}
+
+.pink-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pink-500);
+  margin: 0 auto;
+  box-shadow: 0 0 0 rgba(255, 106, 176, 0.6);
+  animation: pinkPulse 1.8s infinite;
+}
+
+@keyframes pinkPulse {
+  0% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(255, 106, 176, 0.6);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 9px rgba(255, 106, 176, 0);
+  }
+  100% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(255, 106, 176, 0);
+  }
+}
+
+.lista-turnos {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.turno-item {
+  background: #fff;
+  border: 1px solid #f4c3dc;
+  border-radius: 14px;
+  padding: 0.85rem;
+  box-shadow: 0 8px 18px rgba(214, 53, 131, 0.08);
+  animation: fadeIn 0.25s ease;
+}
+
+.turno-item.removing {
+  animation: shrinkOut 0.32s ease forwards;
+}
+
+.turno-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.turno-actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.btn-mini {
+  border: none;
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.btn-editar {
+  background: #ffe4f2;
+  color: #b82574;
+}
+
+.btn-eliminar {
+  background: #ffe0e0;
+  color: #c53030;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shrinkOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+    max-height: 0;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    padding: 0.7rem 0.8rem;
+    gap: 0.6rem;
+  }
+
+  .brand h1 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .brand p {
+    display: none;
+  }
+
+  .sidebar-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin-top: 0;
+  }
+
+  .nav-btn {
+    padding: 0.5rem 0.35rem;
+    border-radius: 10px;
+    font-size: 0.83rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ganancias-grid {
+    grid-template-columns: 1fr;
+  }
+}
