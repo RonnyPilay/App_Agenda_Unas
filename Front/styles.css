@@ -198,6 +198,73 @@ body {
   background: #fff0f7;
 }
 
+.fc .fc-daygrid-day-frame {
+  position: relative;
+}
+
+.fc-dia-pago {
+  background: #edf9ef !important;
+}
+
+.fc-dia-feriado {
+  background: #e6f5ff !important;
+}
+
+.fc-dia-otros {
+  background: #fff3e6 !important;
+}
+
+.fc-dia-seleccionado {
+  box-shadow: inset 0 0 0 2px #f2499a;
+}
+
+.fc-dia-seleccionado.tipo-pago {
+  box-shadow: inset 0 0 0 2px #4caf50;
+}
+
+.fc-dia-seleccionado.tipo-feriado {
+  box-shadow: inset 0 0 0 2px #26a4ff;
+}
+
+.fc-dia-seleccionado.tipo-otros {
+  box-shadow: inset 0 0 0 2px #ff9800;
+}
+
+.dia-pago-corner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 16px solid #4caf50;
+  border-left: 16px solid transparent;
+  z-index: 4;
+}
+
+.dia-anotacion-badge {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  z-index: 4;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #fff;
+}
+
+.dia-anotacion-badge.tipo-feriado {
+  background: #26a4ff;
+}
+
+.dia-anotacion-badge.tipo-otros {
+  background: #ff9800;
+}
+
 /* Forzar calendario en negro (texto + líneas) */
 .fc,
 .fc a,
@@ -361,4 +428,45 @@ body {
   .ganancias-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.anotacion-dia-item {
+  border-width: 2px;
+}
+
+.anotacion-dia-item.tipo-pago {
+  border-color: #7acb86;
+  background: #f3fff5;
+}
+
+.anotacion-dia-item.tipo-feriado {
+  border-color: #88cfff;
+  background: #eef9ff;
+}
+
+.anotacion-dia-item.tipo-otros {
+  border-color: #ffd3a3;
+  background: #fff8f1;
+}
+
+.swal2-field-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin-top: 0.55rem;
+}
+
+.swal2-field-wrap label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #5a2f43;
+  margin-left: 0.2rem;
+}
+
+.anotacion-modal .swal2-input,
+.anotacion-modal .swal2-select,
+.anotacion-modal .swal2-textarea {
+  margin: 0;
+  width: 100%;
 }
