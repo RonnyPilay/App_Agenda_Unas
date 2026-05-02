@@ -765,6 +765,8 @@ function pintarLista(items, titulo = "Turnos", anotacion = null) {
           </div>
         </div>
         <div class="mt-2">
+          ${t.nombre ? `<div><strong>Clienta:</strong> ${escapeHtml(t.nombre)}</div>` : ""}
+          ${t.hora ? `<div><strong>Hora:</strong> ${escapeHtml(t.hora)}</div>` : ""}
           <div><strong>Ganancia:</strong> ${formatearDinero(t.ganancia)}</div>
           ${t.detalles ? `<div><strong>Detalles:</strong> ${escapeHtml(t.detalles)}</div>` : ""}
         </div>
