@@ -1,4 +1,4 @@
-const CACHE_NAME = "julis-agenda-v5";
+const CACHE_NAME = "julis-agenda-v7";
 const APP_SHELL = [
   "./",
   "./index.html",

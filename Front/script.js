@@ -452,6 +452,62 @@ function mostrarSeccion(id, boton = null) {
   }
 
   if (id === "ganancias") {
+    prepararGananciasPorUltimoPago();
+  }
+}
+
+function sumarDiasISO(fechaISO, dias = 1) {
+  if (!fechaISO) return "";
+  const [anio, mes, dia] = fechaISO.split("-").map(Number);
+  const fecha = new Date(anio, (mes || 1) - 1, dia || 1);
+  fecha.setDate(fecha.getDate() + dias);
+  return dateToISO(fecha);
+}
+
+function obtenerUltimaFechaPago(anotaciones) {
+  const items = Array.isArray(anotaciones) ? anotaciones : [];
+  const pagos = items
+    .filter((item) => item?.tipo === ANOTACION_TIPOS.PAGO && item?.fecha)
+    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+  return pagos.length ? pagos[pagos.length - 1].fecha : "";
+}
+
+async function prepararGananciasPorUltimoPago() {
+  if (!refs.gananciaDesde || !refs.gananciaHasta) return;
+
+  try {
+    mostrarEstadoGanancias("Calculando ganancias desde el último cobro...");
+    const resultado = await apiFetch("/anotaciones");
+    const items = Array.isArray(resultado?.data)
+      ? resultado.data.map(adaptarAnotacionDesdeServidor)
+      : [];
+    const ultimaFechaPago = obtenerUltimaFechaPago(items);
+
+    if (!ultimaFechaPago) {
+      refs.gananciaDesde.value = "";
+      refs.gananciaHasta.value = "";
+      renderResumenGanancias(turnos, "Resumen general (todos los turnos)");
+      return;
+    }
+
+    const desde = sumarDiasISO(ultimaFechaPago, 1);
+    const hasta = fechaISOHoy();
+    refs.gananciaDesde.value = desde;
+    refs.gananciaHasta.value = hasta;
+
+    const respuesta = await apiFetch(
+      `/ganancias?desde=${encodeURIComponent(desde)}&hasta=${encodeURIComponent(hasta)}`
+    );
+    const resumen = respuesta?.data || {};
+    const detalle = Array.isArray(resumen.detalle)
+      ? resumen.detalle.map(adaptarTurnoDesdeServidor)
+      : [];
+    renderResumenGanancias(detalle, `Ganancias desde ${desde} hasta ${hasta}`, {
+      totalTurnos: resumen.totalTurnos,
+      totalGanancia: resumen.totalGanancia,
+    });
+  } catch (error) {
+    console.error("Error al calcular ganancias por último cobro", error);
     renderResumenGanancias(turnos, "Resumen general (todos los turnos)");
   }
 }
