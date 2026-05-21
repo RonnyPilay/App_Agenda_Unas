@@ -86,6 +86,16 @@ async function registrarServiceWorker() {
     return;
   }
 
+  if (isFileProtocol || isLocalhost) {
+    try {
+      const registros = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registros.map((registro) => registro.unregister()));
+    } catch (error) {
+      console.warn("No se pudo desactivar el service worker local", error);
+    }
+    return;
+  }
+
   try {
     await navigator.serviceWorker.register("./sw.js");
   } catch (error) {
@@ -573,6 +583,25 @@ function obtenerEventosCalendar() {
   }));
 }
 
+function tieneTurnosEnFecha(fecha) {
+  if (!fecha) return false;
+  return turnos.some((t) => t.fecha === fecha);
+}
+
+function pintarMarcadorTurnosDia(cellEl, fecha) {
+  if (!cellEl) return;
+
+  const frame = cellEl.querySelector(".fc-daygrid-day-frame") || cellEl;
+  frame.querySelectorAll(".dia-turno-dot").forEach((node) => node.remove());
+
+  if (!tieneTurnosEnFecha(fecha)) return;
+
+  const dot = document.createElement("span");
+  dot.className = "dia-turno-dot";
+  dot.title = "Turnos agendados";
+  frame.appendChild(dot);
+}
+
 function pintarMarcadorAnotacionDia(cellEl, anotacion) {
   if (!cellEl) return;
 
@@ -616,10 +645,23 @@ function iniciarCalendario() {
   calendar = new FullCalendar.Calendar(refs.calendarEl, {
     initialView: "dayGridMonth",
     locale: "es",
+    firstDay: 1,
     height: "auto",
     showNonCurrentDates: false,
     fixedWeekCount: false,
     events: obtenerEventosCalendar(),
+    dayHeaderContent(arg) {
+      const dias = {
+        0: "LU",
+        1: "MA",
+        2: "MI",
+        3: "JU",
+        4: "VI",
+        5: "SA",
+        6: "DO",
+      };
+      return { html: dias[arg.date.getDay()] || "" };
+    },
     dayCellClassNames(arg) {
       const fecha = dateToISO(arg.date);
       const anotacion = obtenerAnotacionPorFecha(fecha);
@@ -633,6 +675,7 @@ function iniciarCalendario() {
       const fecha = dateToISO(arg.date);
       const anotacion = obtenerAnotacionPorFecha(fecha);
       pintarMarcadorAnotacionDia(arg.el, anotacion);
+      pintarMarcadorTurnosDia(arg.el, fecha);
       if (fechaSeleccionada && fecha === fechaSeleccionada) {
         arg.el.classList.add("fc-dia-seleccionado");
         const claseTipo = obtenerClaseTipoAnotacion(anotacion?.tipo);
@@ -651,13 +694,12 @@ function iniciarCalendario() {
       sincronizarAnotacionesCalendario({ silent: true });
     },
     eventContent() {
-      const dot = document.createElement("div");
-      dot.className = "pink-dot";
-      return { domNodes: [dot] };
+      return { html: "" };
     },
   });
 
   calendar.render();
+  calendar.setOption("firstDay", 1);
 }
 
 function refrescarCalendario() {
@@ -666,6 +708,13 @@ function refrescarCalendario() {
   calendar.addEventSource(obtenerEventosCalendar());
   setTimeout(() => {
     actualizarEstiloDiaSeleccionado();
+    if (!refs.calendarEl) return;
+    refs.calendarEl.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
+      const fecha = cell.getAttribute("data-date");
+      pintarMarcadorTurnosDia(cell, fecha);
+      const anotacion = obtenerAnotacionPorFecha(fecha);
+      pintarMarcadorAnotacionDia(cell, anotacion);
+    });
   }, 10);
 }
 
